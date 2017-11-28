@@ -1,11 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace tienda\Http\Controllers\Auth;
 
-use App\User;
-use App\Http\Controllers\Controller;
+use tienda\User;
+use tienda\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use tienda\Categoria;
+use tienda\SubCategoria;
+
+
 
 class RegisterController extends Controller
 {
@@ -48,9 +53,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'telefono' => 'required|string|min:8',
         ]);
     }
 
@@ -58,7 +64,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \tienda\User
      */
     protected function create(array $data)
     {
@@ -66,6 +72,39 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'telefono' => $data['telefono'],
         ]);
+    }
+
+    public function index()
+    {
+        $categorias=Categoria::where('estado',1)->get();
+        $subcategorias=SubCategoria::where('estado',1)->orderBy('idCategoria','asc')->get();
+
+        return view('tienda.auth.registro',compact('categorias','subcategorias'));
+    }
+    public function register(Request $request){
+        $this->validation($request);
+        //return $request->all();
+        $request['password']=bcrypt($request['password']);
+        User::create($request->all());
+        return redirect('/')->with('Status','Usuario Registrado Correctamente');
+        
+    }
+
+    public function validation($request){
+
+        return $this->validate($request,[
+            'email'=>'required|email|unique:users|max:255',
+            'usuario'=>'required|max:255',
+            'name'=>'required|max:255',
+            'apellido'=>'required|max:255',
+            'password'=>'required|confirmed|max:8',
+            'telefono'=>'required|max:8',
+            'direccion'=>'required|max:255',
+            'pais'=>'required|max:255',
+            'tipo'=>'required',
+
+            ]);
     }
 }

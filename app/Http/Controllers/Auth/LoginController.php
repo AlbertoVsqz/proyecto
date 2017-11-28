@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace tienda\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use tienda\Http\Controllers\Controller;
+use tienda\Categoria;
+use tienda\SubCategoria;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -17,23 +19,39 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function index()
     {
-        $this->middleware('guest')->except('logout');
+        $categorias=Categoria::where('estado',1)->get();
+        $subcategorias=SubCategoria::where('estado',1)->orderBy('idCategoria','asc')->get();
+
+        return view('tienda.auth.login',compact('categorias','subcategorias'));
     }
+
+     public function login()
+    {
+        $credenciales = $this->validate(request(),[
+            $this->username()=>'required|string',
+            'password'=>'required|string'
+            ]);
+
+
+        //return $credenciales;
+       if(Auth::attempt($credenciales))
+       {
+          return redirect()->route('/');
+        }
+        return  back()->withErrors([$this->username()=>'Estas Credenciales no coinciden con nuestros registros'])
+        ->withInput(request([$this->username()]));
+    }
+
+    public function logout(){
+        Auth::logout();
+
+            return redirect('/');
+
+    }
+    public function username(){
+        return 'usuario';
+    }
+    
 }
