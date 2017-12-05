@@ -99,7 +99,7 @@ class RegisterController extends Controller
             'usuario'=>'required|max:255',
             'name'=>'required|max:255',
             'apellido'=>'required|max:255',
-            'password'=>'required|confirmed|max:8',
+            'password'=>'required|confirmed|min:6',
             'telefono'=>'required|max:8',
             'direccion'=>'required|max:255',
             'pais'=>'required|max:255',

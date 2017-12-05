@@ -1,18 +1,11 @@
 
-@extends('tienda.plantilla')
+@extends('tienda.plantillaproducto')
 
 @section('content')
-@if(session('Status'))			
-<div class="container">
-	<br>
-	<div  class="tittle m-b-md alert alert-success">
-	
-		<h2 id="h1.-bootstrap-heading" class=" tittle">{{session('Status')}}</h2>
+
 		
-	
-	</div>	
-</div>
-		@endif
+
+
 
 	<div class="new-arrivals-w3agile">
 					<div class="container">
@@ -36,7 +29,7 @@
 												<?php $var2 = $imgproducto->idProductos; ?>
 													@if($var2==$var)
 												<div class="grid-img">
-													<img class="view_data2" name="view" value="view" id="{{$imgproducto->idProductos}}"style=""  src="complementos/images/{{$imgproducto->imagen}}" class="img-responsive" alt="">
+													<img class="view_data2" name="view" value="view" id="{{$imgproducto->idProductos}}"style=""  src="{{route('/')}}/complementos/images/{{$imgproducto->imagen}}" class="img-responsive" alt="">
 													
 												</div>
 													@endif
@@ -46,26 +39,19 @@
 										</figure>	
 									</div>
 									<div class="ribben">
-										<p>NEW</p>
+										<p>NUEVO</p>
 									</div>
 									<div class="ribben1">
-										<p>SALE</p>
+										<p>OFERTA</p>
 									</div>
-									<div class="block">
-										<div class="starbox small ghosting"> </div>
-									</div>
+									
 									<div class="women">
 										<h6><a href="#" class="view_data2" name="view" value="view" id="{{$promocion->idProducto}}">{{$promocion->NombrePromocion}}</a></h6>
-										<span class="size">XL / XXL / S </span>
+										
 										<p ><del>$ {{number_format($promocion->precioAnterior,2)}}</del> <em class="item_price">$ {{number_format($promocion->precioActual,2)}}</em></p>
-										@foreach($allproductos as $producto)	
-												<?php $var3 = $producto->idProductos; ?>
-
-													@if($var3==$var)
-										<a href="carrito/add/{{$producto->url}}" data-text="Add To Cart" class="my-cart-b item_add">Add To Cart</a>
-										@endif
-										@endforeach
-
+										
+										<a href="{{route('/')}}/carrito/promo/add/{{$promocion->url}}" data-text="" class="my-cart-b item_add">Add To Cart</a>
+										
 									</div>
 								</div>
 							</div>
@@ -95,24 +81,36 @@
 					<h3 class="tittle1">CATEGORIAS</h3>
 					<div class="latest-grids">
 					<?php $bandera = 0; ?>
-					@foreach($categorias as $categoria)
-						<?php $bandera=$bandera+1; ?>
+					@foreach($categorias2 as $categoria)
+						<?php $var = $categoria->idCategoria; $bandera=$bandera+1;?>
+						
+						
 						<div class="col-md-4 latest-grid">
+						
 							<div class="latest-top">
-								<img  src="complementos/images/l1.jpg" class="img-responsive"  alt="">
+							@foreach($imgcategoria as $imgcat)	
+								<?php $var2 = $imgcat->idCategoria; ?>
+										@if($var2==$var)
+								<img  src="{{route('/')}}/complementos/images/{{$imgcat->imagen}}" class="img-responsive"  alt="">@endif
+							@endforeach
 								<div class="latest-text">
 									<h4>{{$categoria->Nombre}}</h4>
 								</div>
 								<div class="latest-text2 hvr-sweep-to-top">
-									<h4>-50%</h4>
+									<h4>Nuevos</h4>
 								</div>
 							</div>
+							
 						</div>
+
+					
 						@if($bandera==3 || $bandera == 6)
+									<div class="clearfix"></div>
 									<div class="clearfix"></div>
 									</div>
 									<div class="latest-grids">
 						@endif
+					
 						@endforeach
 						
 					</div>
@@ -139,12 +137,12 @@
 												<div class="grid-arr">
 													<div  class="grid-arrival">
 														<figure>		
-															<a href="detalle/{{$producto->url}}">
+															<a href="{{route('/')}}/detalle/{{$producto->url}}">
 															@foreach($imgproductos as $imgproducto)	
 																<?php $var2 = $imgproducto->idProductos; ?>
 																@if($var2==$var)
 																<div class="grid-img">
-																	<img  style=""  src="complementos/images/{{$imgproducto->imagen}}" class="img-responsive" alt="">
+																	<img  style=""  src="{{route('/')}}/complementos/images/{{$imgproducto->imagen}}" class="img-responsive" alt="">
 																</div>
 																@endif
 															@endforeach
@@ -157,11 +155,11 @@
 														<div class="starbox small ghosting"> </div>
 													</div>
 													<div class="women">
-														<h6><a href="detalle/{{$producto->url}}">{{$producto->nombre}}</a></h6>
+														<h6><a href="{{route('/')}}/detalle/{{$producto->url}}">{{$producto->nombre}}</a></h6>
 															<span class="size">XL / XXL / S </span>
 															<p ><em class="item_price">$ {{number_format($producto->precio,2)}}</em></p>
-															<a href="#" data-text="Add To Cart" class="my-cart-b item_add">Add To Cart</a>
-															<a href="detalle/{{$producto->url}}" data-text="leer Mas" class="my-cart-b item_add">Leer Mas</a>
+															<a href="{{route('/')}}/carrito/add/{{$producto->url}}" data-text="" class="my-cart-b item_add">Agregar al Carrito</a>
+															<a href="{{route('/')}}/detalle/{{$producto->url}}" data-text="leer Mas" class="my-cart-b item_add">Leer Mas</a>
 													</div>
 												</div>
 											</div>
@@ -199,7 +197,7 @@
 								<?php $var2 = $imgmarca->idMarca; ?>
 								@if($var2==$var)
 									<li>
-										<img src="complementos/images/{{$imgmarca->imagen}}" alt=" " class="img-responsive" />
+										<img src="{{route('/')}}/complementos/images/{{$imgmarca->imagen}}" alt=" " class="img-responsive" />
 									</li>
 								@endif
 							@endforeach
@@ -235,7 +233,7 @@
 						
 					});
 			</script>
-			<script type="text/javascript" src="complementos/js/jquery.flexisel.js"></script>
+			<script type="text/javascript" src="{{route('/')}}/complementos/js/jquery.flexisel.js"></script>
 		</div>
 	</div>
 	<!-- //top-brands --> 

@@ -1,4 +1,4 @@
-@extends('tienda.plantilla2')
+@extends('tienda.plantillaproducto2')
 
 @section('content')
 	

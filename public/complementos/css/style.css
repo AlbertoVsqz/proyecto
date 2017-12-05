@@ -1302,7 +1302,7 @@ h3.tittle1 {
 
 .categories input + label + ul
 {
-	display: none;
+	display: enabled;
 }
 
 .categories label,
@@ -1319,7 +1319,7 @@ h3.tittle1 {
 
 .categories input:checked:not(:disabled) + label + ul
 {
-	display: block;
+	display: none;
 }
 
 .categories label,
@@ -1620,7 +1620,7 @@ li.list-group-item1 {
 	line-height: 2.5em;
 }
 .input-group {
-	margin-bottom: 20px;
+	
 }
 .in-gp-tl{
 	padding:0;

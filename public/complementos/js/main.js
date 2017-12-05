@@ -109,5 +109,14 @@ jQuery(document).ready(function($){
 
 		window.location.href = href + "/" +cantidad;
 	});
+	
+	$(".btn-show").on('click', function(e){
+		e.preventDefault();
+		//alert("hola");
+		
+		var href = $(this).data('href');
+		
 
+		window.location.href = href ;
+		});
 });

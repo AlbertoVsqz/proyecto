@@ -1,0 +1,389 @@
+@extends('tienda.plantillaproducto2')
+
+@section('content')
+
+	
+
+<!--content-->
+			<div class="content">
+				<div class="products-agileinfo">
+						<h2 class="tittle">RESULTADOS</h2>
+					<div class="container">
+						<div class="product-agileinfo-grids w3l">
+							<div class="col-md-3 product-agileinfo-grid">
+								<div class="categories">
+									<h3>Categorias</h3>
+
+
+									<ul class="tree-list-pad">
+										<?php $bandera1 = 0; ?>
+									@foreach($categorias as $categoria)
+									<?php $bandera1=$bandera1+1;?>
+										<li><input type="checkbox" checked="checked" id="item-{{$bandera1}}" /><label for="item-{{$bandera1}}"><span></span>{{$categoria->Nombre}}</label>
+											<ul>
+											@foreach($subcategorias as $subcategoria)
+											@if($categoria->idCategoria==$subcategoria->idCategoria)
+												<li><a class="btn-show"
+									   data-href="{{route('/')}}/productos/subcategoria/{{$subcategoria->url}}"><h6> {{$subcategoria->Nombre}}</h6></a></li>
+
+													
+												
+												@endif	
+										@endforeach
+										</ul>
+										@endforeach
+
+											</li>	
+								</ul>
+										
+									
+								</div>
+								
+								<div class="brand-w3l">
+									<h3>Flitro por Marcas</h3>
+									<ul>
+									@foreach($marcas as $marca)
+										<li><a href="{{route('/')}}/productos/marcas/{{$marca->url}}">{{$marca->Nombre}}</a></li>
+									@endforeach
+										
+									</ul>
+								</div>
+
+								<div class="top-rates">
+									<h3>Promociones</h3>
+										<?php $bandera3 = 0; ?>
+											@foreach($promociones as $promocion)
+										<?php $var = $promocion->idProducto; $bandera3=$bandera3+1;?>
+
+									<div class="recent-grids">
+									@foreach($imgproductos as $imgproducto)	
+												<?php $var2 = $imgproducto->idProductos; ?>
+													@if($var2==$var)
+										<div class="recent-left">
+											<a href="{{route('/')}}/detalle/promo/{{$promocion->url}}"><img class="img-responsive " src="{{route('/')}}/complementos/images/{{$imgproducto->imagen}}" alt=""></a>	
+										</div>
+										@break
+										@endif
+												@endforeach
+
+
+										<div class="recent-right">
+											<h6 class="best2"><a href="{{route('/')}}/detalle/promo/{{$promocion->url}}">{{$promocion->NombrePromocion}}</a></h6>
+											<p><del>$ {{number_format($promocion->precioAnterior,2)}}</del> <em class="item_price">${{number_format($promocion->precioActual,2)}}</em></p>
+										</div>	
+
+
+										<div class="clearfix"> </div>
+									</div>
+								
+						@endforeach
+
+
+									
+								</div>
+								
+								
+								<div class="cat-img">
+									<img class="img-responsive " src="{{route('/')}}/images/45.jpg" alt="">
+								</div>
+							</div>
+
+							<div class="col-md-9 product-agileinfon-grid1 w3l">
+								<!--<div class="product-agileinfon-top">
+									<div class="col-md-6 product-agileinfon-top-left">
+										<img class="img-responsive " src="images/img1.jpg" alt="">
+									</div>
+									<div class="col-md-6 product-agileinfon-top-left">
+										<img class="img-responsive " src="images/img2.jpg" alt="">
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								
+								<div class="mens-toolbar">
+									<p >Showing 1–9 of 21 results</p>
+									 <p class="showing">Sorting By
+										<select>
+											  <option value=""> Name</option>
+											  <option value="">  Rate</option>
+												<option value=""> Color </option>
+												<option value=""> Price </option>
+										</select>
+									  </p> 
+									  <p>Show
+										<select>
+											  <option value=""> 9</option>
+											  <option value="">  10</option>
+												<option value=""> 11 </option>
+												<option value=""> 12 </option>
+										</select>
+									  </p>
+									<div class="clearfix"></div>		
+								</div>-->
+								<div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+									<ul id="myTab" class="nav1 nav1-tabs left-tab" role="tablist">
+										<ul id="myTab" class="nav nav-tabs left-tab" role="tablist">
+									<li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"><img src="{{route('/')}}/complementos/images/menu1.png"></a></li>
+									<li role="presentation"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile"><img src="{{route('/')}}/complementos/images/menu.png"></a></li>
+									</ul>
+
+
+										<div>
+									<h2 class="tittle">Productos que Coinciden con "{{$query}}"</h2>
+									<br>
+									<br>
+								</div>
+								
+								<div class="container">
+									
+								        <div class="col-md-8">
+								    		<h3>Introduzca para realizar una nueva busqueda</h3>
+								    		<br>
+								            <div id="custom-search-input">
+								                <div class="input-group col-md-12">
+								                <form action="{{route('/')}}/busqueda" method="get">
+								                    <input name="Search" type="text" class=" input-lg" placeholder="Buscar" />
+   													<button class="btn btn-info " type="submit">Buuscar</button>
+								                    </form>
+								                </div>
+								                </div>
+
+								        </div>
+									
+								</div>
+
+									<br><br>
+
+
+									<div id="myTabContent" class="tab-content">
+										@if(session('Nofind'))			
+											
+												
+												<div class="alert alert-danger alert-dismissible text-center" role="alert">
+													<br>
+													<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+													
+												</button>
+												
+													<h2 ><strong><i class="fa fa-info-circle"></i></strong>{{session('Nofind')}}</h2>
+													
+												{{\Session::forget('Nofind')}}
+												</div>
+													
+												<br><br>
+												<p style="text-align: center;">
+													<a href="{{route('/')}}" class="btn btn-primary ">
+														<i class="fa fa-home"></i><span></span>Seguir Comprando   
+													</a>
+											</p>
+										@endif
+					
+									
+									<div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+
+									@if(count($messages)>0)
+											<div class="product-tab">
+												
+											<?php $bandera2 = 0; ?>
+											@foreach($messages as $producto)
+												<?php $var = $producto->idProductos; $bandera2=$bandera2+1;?>
+
+												<div class="col-md-4 product-tab-grid simpleCart_shelfItem">
+													<div class="grid-arr">
+														<div  class="grid-arrival">
+															<figure>		
+																<a href="{{route('/')}}/detalle/{{$producto->url}}" class="new-gri" data-toggle="modal" data-target="#myModal1">
+															@foreach($imgproductos as $imgproducto)	
+																<?php $var2 = $imgproducto->idProductos; ?>
+																@if($var2==$var)
+																	<div class="grid-img">
+																		<img  src="{{route('/')}}/complementos/images/{{$imgproducto->imagen}}" class="img-responsive" alt="">
+																	</div>
+																@endif
+															@endforeach	
+																</a>		
+															</figure>	
+														</div>
+														
+														<div class="women">
+															<h6><a href="{{route('/')}}/detalle/{{$producto->url}}">{{$producto->nombre}}</a></h6>
+															
+															<p ><em class="item_price">$ {{number_format($producto->precio,2)}}</em></p>
+															<a href="{{route('/')}}/carrito/add/{{$producto->url}}" data-text="" class="my-cart-b item_add">Agregar al Carrito</a>
+															<br><br>
+															<a href="{{route('/')}}/detalle/{{$producto->url}}" data-text="Add To Cart" class="my-cart-b item_add">Leer Mas</a>
+														</div>
+													</div>
+												</div>
+												@endforeach
+											</div>
+									@endif
+
+									@if(count($messages2)>0)
+										
+											<div class="product-tab">
+												
+											<?php $bandera2 = 0; ?>
+											@foreach($messages2 as $producto)
+												<?php $var3 = $producto->idProducto; $bandera2=$bandera2+1;?>
+
+												<div class="col-md-4 product-tab-grid simpleCart_shelfItem">
+													<div class="grid-arr">
+														<div  class="grid-arrival">
+															<figure>		
+																<a href="{{route('/')}}/detalle/promo/{{$promocion->url}}" class="new-gri" data-toggle="modal" data-target="#myModal1">
+															@foreach($imgproductos as $imgproducto)	
+																<?php $var4 = $imgproducto->idProductos; ?>
+																@if($var3==$var4)
+																	<div class="grid-img">
+																		<img  src="{{route('/')}}/complementos/images/{{$imgproducto->imagen}}" class="img-responsive" alt="">
+																	</div>
+																@endif
+															@endforeach	
+																</a>		
+															</figure>	
+														</div>
+														<div class="ribben">
+															<p>NUEVO</p>
+														</div>
+														<div class="ribben1">
+															<p>OFERTA</p>
+														</div>
+														<div class="women">
+
+															<h6><a href="{{route('/')}}/detalle/promo/{{$producto->url}}">Promocion: {{$producto->NombrePromocion}}</a></h6>
+															
+															<p ><del>$ {{number_format($producto->precioAnterior,2)}}</del> <em class="item_price">$ {{number_format($producto->precioActual,2)}}</em></p>
+															<a href="{{route('/')}}/carrito/promo/add/{{$producto->url}}" data-text="" class="my-cart-b item_add">Agregar al Carrito</a>
+															<br><br>
+															<a href="{{route('/')}}/detalle/{{$producto->url}}" data-text="Add To Cart" class="my-cart-b item_add">Leer Mas</a>
+														</div>
+													</div>
+												</div>
+												@endforeach
+												
+											</div>
+									@endif
+									</div>
+
+
+									<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
+									@if(count($messages)>0)
+											<div class="product-tab1">
+												<?php $bandera2 = 0; ?>
+											@foreach($messages as $producto)
+												<?php $var5 = $producto->idProductos; $bandera2=$bandera2+1; ?>
+
+												<div class="col-md-4 product-tab1-grid">
+													<div class="grid-arr">
+														<div  class="grid-arrival">
+															<figure>		
+																<a href="{{route('/')}}/detalle/{{$promocion->url}}" class="new-gri" data-toggle="modal" data-target="#myModal1">
+																	@foreach($imgproductos as $imgproducto)	
+																<?php $var6 = $imgproducto->idProductos; ?>
+																@if($var5==$var6)
+
+																	<div class="grid-img">
+																		<img  src="{{route('/')}}/complementos/images/{{$imgproducto->imagen}}" class="img-responsive" alt="">
+																	</div>
+																	@endif
+															@endforeach			
+																</a>		
+															</figure>	
+														</div>
+													</div>
+												</div>
+												<div class="col-md-8 product-tab1-grid1 simpleCart_shelfItem">
+													
+													<div class="women">
+														<h6><a href="{{route('/')}}/detalle/{{$producto->url}}">{{$producto->nombre}}</a></h6>
+														
+														<p ><em class="item_price">$ {{number_format($producto->precio,2)}}</em></p>
+														<a href="{{route('/')}}/carrito/add/{{$producto->url}}" data-text="Add To Cart" class="">Agregar al Carrito</a>
+														<br><br>
+															<a href="{{route('/')}}/detalle/{{$producto->url}}" data-text="Add To Cart" class="">Leer Mas</a>
+													</div>
+												</div>
+												<div class="clearfix"></div>
+												<hr style="width: 100%; color: black; height: 1px; background-color:black;" />
+											@endforeach
+											</div>
+									@endif
+
+									@if(count($messages2)>0)
+											<div class="product-tab1">
+												<?php $bandera2 = 0; ?>
+											@foreach($messages2 as $producto)
+												<?php $var7 = $producto->idProducto; $bandera2=$bandera2+1;?>
+
+												<div class="col-md-4 product-tab1-grid">
+													<div class="grid-arr">
+														<div  class="grid-arrival">
+															<figure>		
+																<a href="{{route('/')}}/detalle/promo/{{$promocion->url}}" class="new-gri" data-toggle="modal" data-target="#myModal1">
+																	@foreach($imgproductos as $imgproducto)	
+																<?php $var8 = $imgproducto->idProductos; ?>
+																@if($var7==$var8)
+
+																	<div class="grid-img">
+																		<img  src="{{route('/')}}/complementos/images/{{$imgproducto->imagen}}" class="img-responsive" alt="">
+																	</div>
+																	@endif
+															@endforeach			
+																</a>		
+															</figure>	
+														</div>
+													</div>
+													<div class="ribben">
+															<p>NUEVO</p>
+														</div>
+														<br>
+														<br>
+														<br>
+
+														<div class="ribben1">
+															<p>OFERTA</p>
+														</div>
+												</div>
+												<div class="col-md-8 product-tab1-grid1 simpleCart_shelfItem">
+													
+													<div class="women">
+													
+															<h6><a href="{{route('/')}}/detalle/promo/{{$producto->url}}">Nombre de la Promocion: {{$producto->NombrePromocion}}</a></h6>
+															
+															<p ><del>$ {{number_format($producto->precioAnterior,2)}}</del> <em class="item_price">$ {{number_format($producto->precioActual,2)}}</em></p>
+															<a href="{{route('/')}}/carrito/promo/add/{{$producto->url}}" data-text="" class="my-cart-b item_add">Agregar al Carrito</a>
+															<br><br>
+															<a href="{{route('/')}}/detalle/{{$producto->url}}" data-text="Add To Cart" class="my-cart-b item_add">Leer Mas</a>
+													</div>
+												</div>
+												<div class="clearfix"></div>
+												<hr style="width: 100%; color: black; height: 1px; background-color:black;" />
+											@endforeach
+											</div>
+									</div>
+									@endif
+
+						
+
+									
+								</div>
+							</div>
+							
+								
+
+
+								
+								
+							
+								</div>
+							<div class="clearfix"> </div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<!--content-->
+
+
+@stop	

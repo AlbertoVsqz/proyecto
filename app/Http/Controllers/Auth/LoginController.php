@@ -38,8 +38,9 @@ class LoginController extends Controller
         //return $credenciales;
        if(Auth::attempt($credenciales))
        {
-          return redirect()->route('/');
+            return redirect()->route('/');
         }
+
         return  back()->withErrors([$this->username()=>'Estas Credenciales no coinciden con nuestros registros'])
         ->withInput(request([$this->username()]));
     }

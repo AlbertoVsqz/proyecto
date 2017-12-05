@@ -1,4 +1,4 @@
-@extends('tienda.plantilla2')
+@extends('tienda.plantillaproducto2')
 
 @section('content')
 
@@ -16,7 +16,7 @@
 							{{csrf_field()}}
 							<div class="key  {{$errors->has('usuario') ? 'has-error' :''}}">
 								<i class="fa fa-envelope" aria-hidden="true"></i>
-								<input  type="text" value="{{old('usuario')}}" name="usuario">
+								<input  type="text" value="{{old('usuario')}}" name="usuario" placeholder="Escriba su Nombre de Usuario">
 								
 
 								<div class="clearfix"></div>
@@ -25,7 +25,7 @@
 							
 							<div class="key  {{$errors->has('password') ? 'has-error' : ''}}">
 								<i class="fa fa-lock" aria-hidden="true"></i>
-								<input  type="password" value="" name="password" >
+								<input  type="password" value="" name="password" placeholder="Escriba su Contraseña" >
 								
 
 								<div class="clearfix"></div>
@@ -36,8 +36,8 @@
 
 					</div>
 					<div class="forg">
-						<a href="#" class="forg-left">Forgot Password</a>
-						<a href="registered.html" class="forg-right">Register</a>
+						
+						<a href="{{route('/')}}/registro" class="forg-right">Register</a>
 					<div class="clearfix"></div>
 					</div>
 				</div>

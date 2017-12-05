@@ -1,4 +1,4 @@
-<!--footer-->
+<!--footer--> 
 					<div class="footer-w3l">
 						<div class="container">
 							<div class="footer-grids">
@@ -13,11 +13,11 @@
 									</div>
 								</div>
 								<div class="col-md-3 footer-grid">
-									<h4>My Account</h4>
+									<h4>Mi Cuenta</h4>
 									<ul>
 										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="login.html">Login</a></li>
-										<li><a href="registered.html"> Create Account </a></li>
+										<li><a href="{{route('/')}}/login">Login</a></li>
+										<li><a href="{{route('/')}}/registro"> Registrarse </a></li>
 									</ul>
 								</div>
 								<div class="col-md-3 footer-grid">

@@ -15,7 +15,8 @@ class Marcas extends Model
 
     protected $fillable=[
     	'Nombre',
-    	'estado'
+    	'estado',
+    	'url'
        
     ];
 

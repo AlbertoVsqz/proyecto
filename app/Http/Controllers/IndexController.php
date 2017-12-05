@@ -10,6 +10,7 @@ use tienda\ImgProductos;
 use tienda\Productos;
 use tienda\Marcas;
 use tienda\imgMarcas;
+use tienda\ImgCategoria;
 
 class IndexController extends Controller
 {
@@ -25,9 +26,11 @@ class IndexController extends Controller
     	$productos=Productos::orderBy('existencias','desc')->take(2)->get();
     	$marcas=Marcas::where('estado',1)->get();
     	$imgmarcas=imgMarcas::orderBy('idMarca', 'asc')->get();
+        $categorias2=Categoria::where('idCategoria','<>',1)->get();
+        $imgcategoria=ImgCategoria::orderBy('idCategoria', 'asc')->take(6)->get();
 
-    	//dd($promociones);
-    	return view('tienda.index',compact('categorias','subcategorias','promociones','imgproductos','productos','marcas','imgmarcas','allproductos'));
+    	//dd($categorias2);
+    	return view('tienda.index',compact('categorias','subcategorias','promociones','imgproductos','productos','marcas','imgmarcas','allproductos','imgcategoria','categorias2'));
     }
     
 }
